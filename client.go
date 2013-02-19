@@ -25,18 +25,18 @@ func main() {
     fmt.Printf("File error: %v\n", err)
     os.Exit(1)
   }
-  fmt.Printf("%s\n", string(file))
+  fmt.Printf("%s\n", file)
 
   config := SensuConfig{}
   json.Unmarshal(file, &config)
-  fmt.Printf("Results: %v\n", config)
+  fmt.Printf("Config: %v\n", config)
 
   context, _ := zmq.NewContext()
   socket, _ := context.NewSocket(zmq.REQ)
 
   for _, server := range config.Servers {
     uri := fmt.Sprintf("tcp://%s:%d", server.Host, server.Port)
-    fmt.Printf("Connecting to server: %v\n", uri)
+    fmt.Printf("Connecting to server: %s\n", uri)
     socket.Connect(uri)
   }
 
